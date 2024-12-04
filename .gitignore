@@ -1,1 +1,9 @@
 nvim_config_dump.txt
+init.lua
+lua/autocmds.lua
+lua/settings.lua
+lua/plugins/catppuccin.lua
+lua/plugins/nvim-tree.lua
+lua/plugins/telescope.lua
+lua/plugins/treesitter.lua
+lua/plugins/tokyonight.lua
