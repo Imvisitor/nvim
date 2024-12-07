@@ -1,13 +1,8 @@
 return {
-  'hrsh7th/cmp-nvim-lsp',
-  requires = 'neovim/nvim-lspconfig',  
-  config = function()
-    local lspconfig = require('lspconfig')
-    local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-
-    lspconfig.pyright.setup {
-      capabilities = capabilities,
-    }
-  end,
+    "hrsh7th/cmp-nvim-lsp", -- LSP integration for nvim-cmp
+    dependencies = { "neovim/nvim-lspconfig" }, -- Ensure nvim-lspconfig is available
+    config = function()
+        require("cmp_nvim_lsp").default_capabilities()
+    end,
 }
 

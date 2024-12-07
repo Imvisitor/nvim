@@ -1,24 +1,23 @@
 return {
-    "neovim/nvim-lspconfig",
+    "neovim/nvim-lspconfig", 
     config = function()
         local lspconfig = require("lspconfig")
-        local capabilities = require('cmp_nvim_lsp').default_capabilities()
+        local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-        -- Gemeinsame on_attach Funktion
-        local on_attach = function(client, bufnr)
-            -- Beispiel: Mapping der `gd` (go to definition) in diesem Buffer
-            vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', {noremap = true, silent = true})
-        end
+        local servers = {
+            java = "jdtls",
+            c = "clangd",
+            python = "pyright",
+            lua = "lua_ls",
+            latex = "texlab",
+        }
 
-        -- Liste der LSP-Server, die du einrichten möchtest
-        local servers = { 'pyright', 'clangd', 'texlab' }
-        for _, lsp in ipairs(servers) do
-          lspconfig[lsp].setup {
-            capabilities = capabilities,
-            on_attach = on_attach,
-            -- Server-spezifische Optionen können hier hinzugefügt werden
-          }
+        -- Setup für jeden Server
+        for _, server in pairs(servers) do
+            lspconfig[server].setup({
+                capabilities = capabilities,
+                on_attach = function(_, _) end,
+            })
         end
     end,
 }
-

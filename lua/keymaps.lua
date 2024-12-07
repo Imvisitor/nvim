@@ -1,36 +1,59 @@
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
--- Tabs: Open, close, and navigate between tabs
-local function open_tab_with_file()
-    local filename = vim.fn.input("File name: ")
-    if filename ~= "" then
-        vim.cmd("tabnew " .. filename)
-    else
-        vim.cmd("tabnew") -- Open an empty tab if no file is provided
-    end
-end
-
-map("n", "<leader>tn", open_tab_with_file, { desc = "Open a new tab with a file" })
-map("n", "<leader>tc", "<cmd>tabclose<CR>", opts) -- Close current tab
-map("n", "<leader>tx", "<cmd>tabnext<CR>", opts)  -- Go to the next tab
+-- Explorer
+map("n", "<leader>pv", ":NvimTreeToggle<CR>", opts) -- Toggle file explorer
 
 -- Fuzzy Finder (Telescope)
-map("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { desc = "Find files" })
-map("n", "<leader>fg", "<cmd>Telescope live_grep<CR>", { desc = "Search text" })
-map("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "Switch buffers" })
-map("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "Search help tags" })
+map("n", "<leader>ff", ":Telescope find_files<CR>", opts) -- Find files
+map("n", "<leader>fg", ":Telescope live_grep<CR>", opts) -- Search text
+map("n", "<leader>fb", ":Telescope buffers<CR>", opts) -- Show open buffers
+map("n", "<leader>fh", ":Telescope help_tags<CR>", opts) -- Search help tags
 
--- LSP: Keymaps for language server features
-map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-map("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-map("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-map("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+-- Git Integration
+map("n", "<leader>gs", ":Telescope git_status<CR>", opts) -- Show Git status
+map("n", "<leader>gc", ":Telescope git_commits<CR>", opts) -- Browse Git commits
 
--- Split navigation
-map("n", "<C-h>", "<C-w>h", opts) -- Move left
-map("n", "<C-l>", "<C-w>l", opts) -- Move right
-map("n", "<C-j>", "<C-w>j", opts) -- Move down
-map("n", "<C-k>", "<C-w>k", opts) -- Move up
+-- LSP Functions
+map("n", "gd", ":lua vim.lsp.buf.definition()<CR>", opts) -- Go to definition
+map("n", "gi", ":lua vim.lsp.buf.implementation()<CR>", opts) -- Go to implementation
+map("n", "gr", ":lua vim.lsp.buf.references()<CR>", opts) -- Show references
+map("n", "K", ":lua vim.lsp.buf.hover()<CR>", opts) -- Show documentation
+map("n", "<leader>rn", ":lua vim.lsp.buf.rename()<CR>", opts) -- Rename symbol
+map("n", "<leader>ca", ":lua vim.lsp.buf.code_action()<CR>", opts) -- Code action
+map("n", "]d", ":lua vim.diagnostic.goto_next()<CR>", opts) -- Jump to next diagnostic
+map("n", "[d", ":lua vim.diagnostic.goto_prev()<CR>", opts) -- Jump to previous diagnostic
+
+-- Snippets
+map("i", "<C-k>", ":lua require'luasnip'.expand_or_jump()<CR>", opts) -- Expand or jump in snippet
+map("s", "<C-k>", ":lua require'luasnip'.expand_or_jump()<CR>", opts)
+map("i", "<C-j>", ":lua require'luasnip'.jump(-1)<CR>", opts) -- Jump back in snippet
+map("s", "<C-j>", ":lua require'luasnip'.jump(-1)<CR>", opts)
+
+-- Window Navigation
+map("n", "<C-h>", "<C-w>h", opts) -- Move to the left window
+map("n", "<C-l>", "<C-w>l", opts) -- Move to the right window
+map("n", "<C-j>", "<C-w>j", opts) -- Move to the window below
+map("n", "<C-k>", "<C-w>k", opts) -- Move to the window above
+
+-- Tabs
+map("n", "<leader>tn", ":lua require('scripts.newtabwithfile').open_tab_with_file()<CR>", opts) -- Open a new tab with optional file 
+map("n", "<leader>tc", ":tabclose<CR>", opts) -- Close the current tab
+map("n", "<leader>to", ":tabonly<CR>", opts) -- Close all other tabs
+map("n", "<leader>tp", ":tabprevious<CR>", opts) -- Go to the previous tab
+map("n", "<leader>tx", ":tabnext<CR>", opts) -- Go to the next tab
+
+-- Buffers
+map("n", "<leader>bd", ":bdelete<CR>", opts) -- Delete current buffer
+map("n", "<leader>bn", ":bnext<CR>", opts) -- Go to the next buffer
+map("n", "<leader>bp", ":bprevious<CR>", opts) -- Go to the previous buffer
+
+-- Terminal
+map("n", "<leader>tt", ":split | terminal<CR>", opts) -- Open terminal in a horizontal split
+map("n", "<leader>tv", ":vsplit | terminal<CR>", opts) -- Open terminal in a vertical split
+
+-- Execute Code
+map("n", "<leader>rp", ":lua require('scripts.run_python').run_python_file()<CR>", opts) -- Run Python
+map("n", "<leader>rc", ":lua require('scripts.run_c').run_c_file()<CR>", opts) -- Run C
+map("n", "<leader>rl", ":lua require('scripts.run_lua').run_lua_file()<CR>", opts) -- Run Lua
+map("n", "<leader>rj", ":lua require('scripts.run_java').run_java_file()<CR>", opts) -- Run Java
