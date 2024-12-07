@@ -2,8 +2,9 @@ local M = {}
 
 -- Function to find, compile, and run a Java file with "public static void main(String[] args)"
 M.run_java_file = function()
-    -- Get the directory of the current file
-    local current_dir = vim.fn.expand("%:p:h")
+    -- Get the directory of the currently open file
+    local current_file = vim.fn.expand("%:p")
+    local current_dir = vim.fn.fnamemodify(current_file, ":h")
 
     -- Find a Java file in the current directory with "public static void main(String[] args)"
     local java_file_with_main = nil
