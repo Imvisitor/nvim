@@ -1,8 +1,20 @@
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
+-- Safe load of nvimtree_utils
+local status, nvimtree_utils = pcall(require, "scripts.nvimtree_utils")
+if not status then
+  vim.notify("Failed to load nvimtree_utils.lua", vim.log.levels.ERROR)
+  return
+end
 
--- Explorer
-map("n", "<leader>pv", ":NvimTreeToggle<CR>", opts) -- Toggle file explorer
+-- Keymaps for Explorer
+map("n", "<leader>e", ":NvimTreeToggle<CR>", opts) -- Toggle file explorer
+map("n", "<leader>er", function() nvimtree_utils.change_nvim_tree_root() end, opts) -- Dynamically change the root folder
+map("n", "<leader>ec", function() nvimtree_utils.collapse_all() end, opts) -- Collapse all folders
+map("n", "<leader>ef", function() nvimtree_utils.focus_current_file() end, opts) -- Focus on the current file
+map("n", "<leader>eh", function()
+  require("nvim-tree.api").tree.toggle_help()
+end, opts)
 
 -- Fuzzy Finder (Telescope)
 map("n", "<leader>ff", ":Telescope find_files<CR>", opts) -- Find files
@@ -57,3 +69,4 @@ map("n", "<leader>rp", ":lua require('scripts.run_python').run_python_file()<CR>
 map("n", "<leader>rc", ":lua require('scripts.run_c').run_c_file()<CR>", opts) -- Run C
 map("n", "<leader>rl", ":lua require('scripts.run_lua').run_lua_file()<CR>", opts) -- Run Lua
 map("n", "<leader>rj", ":lua require('scripts.run_java').run_java_file()<CR>", opts) -- Run Java
+
