@@ -1,14 +1,13 @@
 return {
   "folke/which-key.nvim",
-  event = "VeryLazy", -- Lädt das Plugin nur bei Bedarf
+  event = "VeryLazy",
   config = function()
     require("which-key").setup({
-      -- Hier kannst du Optionen konfigurieren
       plugins = {
-        spelling = { enabled = true }, -- Aktiviert Vorschläge für Rechtschreibung
+        spelling = { enabled = true },
       },
       win = {
-        border = "rounded", -- Abgerundete Fensterrahmen
+        border = "rounded",
       },
     })
   end,
