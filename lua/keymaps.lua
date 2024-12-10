@@ -1,5 +1,14 @@
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
+local cmp = require('cmp')
+
+
+-- Esc -> CapsLock
+--map("i", "<CapsLock>", "<Esc>", opts) -- Funktioniert noch nicht: CapsLock gibt es nicht
+
+-- Run Code  
+map("n", "<leader>rp", ":lua vim.cmd('!python3 ' .. vim.fn.expand('%'))<CR>", opts) -- Run Python File
+map("n", "<leader>rc", ":lua vim.cmd('!gcc -o ' .. vim.fn.expand('%:r') .. ' ' .. vim.fn.expand('%') .. ' -Wall -Wextra -Werror -pedantic -std=c11 && ./' .. vim.fn.expand('%:r'))<CR>", opts) -- Run C File
 
 -- Explorer öffnen
 map("n", "<leader>pv", ":NvimTreeToggle<CR>", opts)
@@ -12,7 +21,7 @@ map("n", "<leader>fh", ":Telescope help_tags<CR>", opts) -- Hilfe durchsuchen
 
 -- Git Status
 map("n", "<leader>gs", ":Telescope git_status<CR>", opts)
-map("n", "<leader>gc", ":Telescope git_commits<CR>", opts) -- Git Commits durchsuchen
+map("n", "<leader>gc", ":Telescope git_commits<CR>", opts) -- Git Commits durchsuchen<D-a>
 
 
 -- LSP-Funktionen
@@ -30,11 +39,6 @@ map("s", "<C-k>", ":lua require'luasnip'.expand_or_jump()<CR>", opts)
 map("i", "<C-j>", ":lua require'luasnip'.jump(-1)<CR>", opts) -- Zum vorherigen Snippet springen
 map("s", "<C-j>", ":lua require'luasnip'.jump(-1)<CR>", opts)
 
--- Autocompletion
-map("i", "<C-Space>", ":lua require'cmp'.complete()<CR>", opts) -- Autocompletion triggern
-map("i", "<CR>", ":lua require'cmp'.confirm({ select = true })<CR>", opts) -- Autocompletion bestätigen
-map("i", "<C-e>", ":lua require'cmp'.abort()<CR>", opts) -- Autocompletion abbrechen
-
 -- Fenster-Navigation
 map("n", "<C-h>", "<C-w>h", opts) -- Zum linken Fenster
 map("n", "<C-l>", "<C-w>l", opts) -- Zum rechten Fenster
@@ -45,8 +49,8 @@ map("n", "<C-k>", "<C-w>k", opts) -- Zum oberen Fenster
 map("n", "<leader>tn", ":tabnew<CR>", opts) -- Neues Tab öffnen
 map("n", "<leader>tc", ":tabclose<CR>", opts) -- Tab schließen
 map("n", "<leader>to", ":tabonly<CR>", opts) -- Alle anderen Tabs schließen
-map("n", "<leader>tp", ":tabprevious<CR>", opts) -- Zum vorherigen Tab
-map("n", "<leader>tn", ":tabnext<CR>", opts) -- Zum nächsten Tab
+map("n", "<leader>tp", ":tabprevious<CR>", opts) -- Zum vorherigen Tabb
+map("n", "<leader>tx", ":tabnext<CR>", opts) -- Zum nächsten Tab
 
 -- Buffers
 map("n", "<leader>bd", ":bdelete<CR>", opts) -- Buffer löschen

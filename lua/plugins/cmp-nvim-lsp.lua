@@ -7,7 +7,7 @@ return {
         cmp.setup({
             snippet = {
                 expand = function(args)
-                    vim.fn["vsnip#anonymous"](args.body) -- You can replace `vsnip` with `luasnip` or another snippet engine
+                    vim.fn["luasnip#anonymous"](args.body) -- You can replace `vsnip` with `luasnip` or another snippet engine
                 end,
             },
             sources = cmp.config.sources({

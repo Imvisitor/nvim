@@ -11,5 +11,6 @@ return {
     require("plugins.cmp"),          -- Nvim-CMP (Autocompletion)
     require("plugins.cmp-nvim-lsp"), -- Integrates nvim-cmp with LSP capabilities
     require("plugins.luasnip"),      -- Luasnippet (Snippets)
+    require("plugins.autopairs"),
 }
 
