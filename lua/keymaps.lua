@@ -70,3 +70,6 @@ map("n", "<leader>rc", ":lua require('scripts.run_c').run_c_file()<CR>", opts) -
 map("n", "<leader>rl", ":lua require('scripts.run_lua').run_lua_file()<CR>", opts) -- Run Lua
 map("n", "<leader>rj", ":lua require('scripts.run_java').run_java_file()<CR>", opts) -- Run Java
 
+-- Peek
+map("n", "<leader>po", ":PeekOpen <CR>", opts)
+map("n", "<leader>pc", ":PeekClose <CR>", opts)
